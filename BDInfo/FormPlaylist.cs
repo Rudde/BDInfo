@@ -24,6 +24,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using BDInfo.Lib;
 
 namespace BDInfo
 {
@@ -131,12 +132,12 @@ namespace BDInfo
                 if (BDInfoSettings.EnableSSIF &&
                     playlist.InterleavedFileSize > 0)
                 {
-                    playlistSize.Text = ToolBox.FormatFileSize(playlist.InterleavedFileSize);
+                    playlistSize.Text = ToolBox.FormatFileSize(playlist.InterleavedFileSize, BDInfoSettings.MainFormHRSizeFormat);
                     playlistSize.Tag = playlist.InterleavedFileSize;
                 }
                 else if (playlist.FileSize > 0)
                 {
-                    playlistSize.Text = ToolBox.FormatFileSize(playlist.FileSize);
+                    playlistSize.Text = ToolBox.FormatFileSize(playlist.FileSize, BDInfoSettings.MainFormHRSizeFormat);
                     playlistSize.Tag = playlist.FileSize;
                 }
                 else
@@ -149,7 +150,7 @@ namespace BDInfo
                     new ListViewItem.ListViewSubItem();
                 if (playlist.TotalAngleSize > 0)
                 {
-                    playlistSize2.Text = ToolBox.FormatFileSize(playlist.TotalAngleSize);
+                    playlistSize2.Text = ToolBox.FormatFileSize(playlist.TotalAngleSize, BDInfoSettings.MainFormHRSizeFormat);
                 }
                 else
                 {
@@ -244,12 +245,12 @@ namespace BDInfo
                 if (BDInfoSettings.EnableSSIF &&
                     clip.InterleavedFileSize > 0)
                 {
-                    clipSize.Text = ToolBox.FormatFileSize(clip.InterleavedFileSize);
+                    clipSize.Text = ToolBox.FormatFileSize(clip.InterleavedFileSize, BDInfoSettings.MainFormHRSizeFormat);
                     clipSize.Tag = clip.InterleavedFileSize;
                 }
                 else if (clip.FileSize > 0)
                 {
-                    clipSize.Text = ToolBox.FormatFileSize(clip.FileSize);
+                    clipSize.Text = ToolBox.FormatFileSize(clip.FileSize, BDInfoSettings.MainFormHRSizeFormat);
                     clipSize.Tag = clip.FileSize;
                 }
                 else
@@ -262,7 +263,7 @@ namespace BDInfo
                     new ListViewItem.ListViewSubItem();
                 if (clip.PacketSize > 0)
                 {
-                    clipSize2.Text = ToolBox.FormatFileSize(clip.PacketSize);
+                    clipSize2.Text = ToolBox.FormatFileSize(clip.PacketSize, BDInfoSettings.MainFormHRSizeFormat);
                 }
                 else
                 {

@@ -21,12 +21,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Globalization;
-using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using BDInfo.Lib;
 using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace BDInfo
@@ -580,7 +579,7 @@ namespace BDInfo
             textBoxDetails.Text += string.Format(CultureInfo.InvariantCulture, 
                                                 "Disc Size: {0:N0} bytes ({1}){2}",
                                                 BDROM.Size,
-                                                ToolBox.FormatFileSize(BDROM.Size),
+                                                ToolBox.FormatFileSize(BDROM.Size, BDInfoSettings.MainFormHRSizeFormat),
                                                 Environment.NewLine);
 
             LoadPlaylists();
@@ -694,12 +693,12 @@ namespace BDInfo
                     if (BDInfoSettings.EnableSSIF &&
                         playlist.InterleavedFileSize > 0)
                     {
-                        playlistSize.Text = ToolBox.FormatFileSize(playlist.InterleavedFileSize);
+                        playlistSize.Text = ToolBox.FormatFileSize(playlist.InterleavedFileSize, BDInfoSettings.MainFormHRSizeFormat);
                         playlistSize.Tag = playlist.InterleavedFileSize;
                     }
                     else if (playlist.FileSize > 0)
                     {
-                        playlistSize.Text = ToolBox.FormatFileSize(playlist.FileSize);
+                        playlistSize.Text = ToolBox.FormatFileSize(playlist.FileSize, BDInfoSettings.MainFormHRSizeFormat);
                         playlistSize.Tag = playlist.FileSize;
                     }
                     else
@@ -712,7 +711,7 @@ namespace BDInfo
                         new ListViewItem.ListViewSubItem();
                     if (playlist.TotalAngleSize > 0)
                     {
-                        playlistSize2.Text = ToolBox.FormatFileSize(playlist.TotalAngleSize);
+                        playlistSize2.Text = ToolBox.FormatFileSize(playlist.TotalAngleSize, BDInfoSettings.MainFormHRSizeFormat);
                     }
                     else
                     {
@@ -813,12 +812,12 @@ namespace BDInfo
                 if (BDInfoSettings.EnableSSIF &&
                     clip.InterleavedFileSize > 0)
                 {
-                    clipSize.Text = ToolBox.FormatFileSize(clip.InterleavedFileSize);
+                    clipSize.Text = ToolBox.FormatFileSize(clip.InterleavedFileSize, BDInfoSettings.MainFormHRSizeFormat);
                     clipSize.Tag = clip.InterleavedFileSize;
                 }
                 else if (clip.FileSize > 0)
                 {
-                    clipSize.Text = ToolBox.FormatFileSize(clip.FileSize);
+                    clipSize.Text = ToolBox.FormatFileSize(clip.FileSize, BDInfoSettings.MainFormHRSizeFormat);
                     clipSize.Tag = clip.FileSize;
                 }
                 else
@@ -831,7 +830,7 @@ namespace BDInfo
                     new ListViewItem.ListViewSubItem();
                 if (clip.PacketSize > 0)
                 {
-                    clipSize2.Text = ToolBox.FormatFileSize(clip.PacketSize);
+                    clipSize2.Text = ToolBox.FormatFileSize(clip.PacketSize, BDInfoSettings.MainFormHRSizeFormat);
                 }
                 else
                 {
@@ -981,7 +980,7 @@ namespace BDInfo
                 {
                     TSPlaylistFile playlist = 
                         BDROM.PlaylistFiles[playlistName];
-                    item.SubItems[4].Text = ToolBox.FormatFileSize(playlist.TotalAngleSize);
+                    item.SubItems[4].Text = ToolBox.FormatFileSize(playlist.TotalAngleSize, BDInfoSettings.MainFormHRSizeFormat);
                     item.SubItems[4].Tag = playlist.TotalAngleSize;
                 }
             }
@@ -1015,7 +1014,7 @@ namespace BDInfo
                 if (selectedPlaylist.StreamClips.Count > i &&
                     selectedPlaylist.StreamClips[i].Name == (string)item.SubItems[0].Tag)
                 {
-                    item.SubItems[4].Text = ToolBox.FormatFileSize(selectedPlaylist.StreamClips[i].PacketSize);
+                    item.SubItems[4].Text = ToolBox.FormatFileSize(selectedPlaylist.StreamClips[i].PacketSize, BDInfoSettings.MainFormHRSizeFormat);
                     item.Tag = selectedPlaylist.StreamClips[i].PacketSize;
 
                 }

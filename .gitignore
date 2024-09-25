@@ -108,4 +108,4 @@ Backup*/
 UpgradeLog*.XML
 BDInfo.VC.opendb
 /.vs/slnx.sqlite
-/.vs
+.vs/

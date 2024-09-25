@@ -23,6 +23,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Xml;
+using BDInfo.Lib;
 using DiscUtils;
 using DiscUtils.Udf;
 

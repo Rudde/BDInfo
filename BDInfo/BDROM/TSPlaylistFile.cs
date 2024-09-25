@@ -22,7 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Text;
+using BDInfo.Lib;
 using DiscUtils;
 using DiscUtils.Udf;
 
@@ -42,7 +42,7 @@ namespace BDInfo
         public bool HasLoops = false;
         public bool IsCustom = false;
 
-         public bool MVCBaseViewR = false;
+        public bool MVCBaseViewR = false;
 
         public List<double> Chapters = new List<double>();
 

@@ -107,7 +107,6 @@
     <Compile Include="FormPlaylist.Designer.cs">
       <DependentUpon>FormPlaylist.cs</DependentUpon>
     </Compile>
-    <Compile Include="ToolBox.cs" />
     <Compile Include="FormChart.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -184,6 +183,12 @@
     <PackageReference Include="ZedGraph">
       <Version>5.1.7</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BDInfo.Lib\BDInfo.Lib.csproj">
+      <Project>{36a95b73-e954-4f8c-a9ea-7fca275bbca7}</Project>
+      <Name>BDInfo.Lib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
