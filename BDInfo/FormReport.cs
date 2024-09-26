@@ -23,6 +23,7 @@ using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
 using BDInfo.Lib;
+using BDInfo.Lib.BDROM;
 
 namespace BDInfo
 {

@@ -19,7 +19,7 @@
 
 #undef DEBUG
 
-namespace BDInfo
+namespace BDInfo.Lib.BDROM
 {
     public abstract class TSCodecMPA
     {

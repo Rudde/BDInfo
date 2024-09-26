@@ -79,28 +79,6 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BDROM\TSCodecAAC.cs" />
-    <Compile Include="BDROM\TSCodecMPA.cs" />
-    <Compile Include="BDROM\TSCodecAC3.cs" />
-    <Compile Include="BDROM\TSCodecAVC.cs" />
-    <Compile Include="BDROM\BDROM.cs" />
-    <Compile Include="BDROM\TSCodecDTS.cs" />
-    <Compile Include="BDROM\TSCodecDTSHD.cs" />
-    <Compile Include="BDROM\TSCodecHEVC.cs" />
-    <Compile Include="BDROM\TSCodecLPCM.cs" />
-    <Compile Include="BDROM\TSCodecMPEG2.cs" />
-    <Compile Include="BDROM\TSCodecPGS.cs" />
-    <Compile Include="BDROM\TSCodecMVC.cs" />
-    <Compile Include="BDROM\TSCodecTrueHD.cs" />
-    <Compile Include="BDROM\TSInterleavedFile.cs" />
-    <Compile Include="BDROM\TSStreamBuffer.cs" />
-    <Compile Include="BDROM\TSStreamClipFile.cs" />
-    <Compile Include="BDROM\LanguageCodes.cs" />
-    <Compile Include="BDROM\TSStreamClip.cs" />
-    <Compile Include="BDROM\TSStreamFile.cs" />
-    <Compile Include="BDROM\TSPlaylistFile.cs" />
-    <Compile Include="BDROM\TSStream.cs" />
-    <Compile Include="BDROM\TSCodecVC1.cs" />
     <Compile Include="FormPlaylist.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -174,9 +152,6 @@
     <None Include="Resources\Toma4025-Rumax-Bluray-disc.ico" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="DiscUtils">
-      <Version>0.16.13</Version>
-    </PackageReference>
     <PackageReference Include="Microsoft-WindowsAPICodePack-Shell">
       <Version>1.1.4</Version>
     </PackageReference>
@@ -190,6 +165,7 @@
       <Name>BDInfo.Lib</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

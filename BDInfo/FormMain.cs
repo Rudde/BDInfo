@@ -26,6 +26,7 @@ using System.Globalization;
 using System.Threading;
 using System.Windows.Forms;
 using BDInfo.Lib;
+using BDInfo.Lib.BDROM;
 using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace BDInfo
@@ -430,7 +431,14 @@ namespace BDInfo
         {
             try
             {
-                BDROM = new BDROM((string)e.Argument);
+                BDROM = new BDROM(
+                    (string)e.Argument,
+                    BDInfoSettings.EnableSSIF,
+                    BDInfoSettings.FilterLoopingPlaylists,
+                    BDInfoSettings.FilterShortPlaylists,
+                    BDInfoSettings.FilterShortPlaylistsValue,
+                    BDInfoSettings.KeepStreamOrder,
+                    BDInfoSettings.ExtendedStreamDiagnostics);
                 BDROM.StreamClipFileScanError += new BDROM.OnStreamClipFileScanError(BDROM_StreamClipFileScanError);
                 BDROM.StreamFileScanError += new BDROM.OnStreamFileScanError(BDROM_StreamFileScanError);
                 BDROM.PlaylistFileScanError += new BDROM.OnPlaylistFileScanError(BDROM_PlaylistFileScanError);
@@ -1226,7 +1234,7 @@ namespace BDInfo
             {
                 TSStreamFile streamFile = scanState.StreamFile;
                 List<TSPlaylistFile> playlists = scanState.PlaylistMap[streamFile.Name];
-                streamFile.Scan(playlists, true);
+                streamFile.Scan(playlists, true, BDInfoSettings.ExtendedStreamDiagnostics);
             }
             catch (Exception ex)
             {
