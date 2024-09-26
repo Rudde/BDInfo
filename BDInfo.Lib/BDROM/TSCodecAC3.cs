@@ -19,7 +19,6 @@
 
 #undef DEBUG
 using System.IO;
-using BDInfo.Lib.BDROM;
 
 namespace BDInfo.Lib.BDROM
 {
@@ -27,13 +26,13 @@ namespace BDInfo.Lib.BDROM
     {
         private static readonly int[] AC3Bitrate = 
         {
-             32,
-             40,
-             48,
-             56,
-             64,
-             80,
-             96,
+            32,
+            40,
+            48,
+            56,
+            64,
+            80,
+            96,
             112,
             128,
             160,
@@ -72,7 +71,10 @@ namespace BDInfo.Lib.BDROM
 
         public static void Scan(TSAudioStream stream, TSStreamBuffer buffer, ref string tag)
         {
-            if (stream.IsInitialized) return;
+            if (stream.IsInitialized)
+            {
+                return;
+            }
 
             byte[] sync = buffer.ReadBytes(2);
             if (sync == null || sync[0] != 0x0B || sync[1] != 0x77)
@@ -242,7 +244,9 @@ namespace BDInfo.Lib.BDROM
 
                     uint emdfVersion = buffer.ReadBits2(2); //emdf_version
                     if (emdfVersion == 3)
+                    {
                         emdfVersion += buffer.ReadBits2(2);
+                    }
 
                     if (emdfVersion > 0)
                     {
@@ -252,14 +256,18 @@ namespace BDInfo.Lib.BDROM
                     {
                         var temp = buffer.ReadBits2(3);
                         if (temp == 0x7)
+                        {
                             buffer.BSSkipBits(2); //skip 3 bits
+                        }
 
                         var emdfPayloadID = buffer.ReadBits2(5);
                         
                         if (emdfPayloadID > 0 && emdfPayloadID < 16)
                         {
                             if (emdfPayloadID == 0x1F)
+                            {
                                 buffer.BSSkipBits(5); //skip 5 bits
+                            }
 
                             EmdfPayloadConfig(buffer);
 
@@ -270,7 +278,9 @@ namespace BDInfo.Lib.BDROM
                         while ((emdfPayloadID = buffer.ReadBits2(5)) != 14 && buffer.Position < buffer.Length)
                         {
                             if (emdfPayloadID == 0x1F)
+                            {
                                 buffer.BSSkipBits(5); //skip 5 bits
+                            }
 
                             EmdfPayloadConfig(buffer);
 
@@ -287,14 +297,18 @@ namespace BDInfo.Lib.BDROM
                             uint jocNumObjectsBits = buffer.ReadBits2(6);
 
                             if (jocNumObjectsBits > 0)
+                            {
                                 stream.HasExtensions = true;
+                            }
                         }
                     }
                 }
             }
 
             if ((channelMode < 8) && stream.ChannelCount == 0)
+            {
                 stream.ChannelCount = AC3Channels[channelMode];
+            }
 
             if (stream.AudioMode == TSAudioMode.Unknown)
             {
@@ -330,17 +344,20 @@ namespace BDInfo.Lib.BDROM
 
             if (bsid <= 10)
             {
-
                 uint fSize = frameSizeCode >> 1;
                 if (fSize < 19)
+                {
                     stream.BitRate = AC3Bitrate[fSize] * 1000;
+                }
             }
             else
             {
                 stream.BitRate = (long)
                     (4.0 * frameSize * stream.SampleRate / (numBlocks * 256));
                 if (stream.CoreStream != null)
+                {
                     stream.BitRate += stream.CoreStream.BitRate;
+                }
             }
 
             stream.LFE = (int) lfeOn;
@@ -348,7 +365,9 @@ namespace BDInfo.Lib.BDROM
             {
                 if ((stream.StreamType == TSStreamType.AC3_PLUS_AUDIO && bsid == 6) ||
                     (stream.StreamType == TSStreamType.AC3_AUDIO))
+                {
                     stream.DialNorm = (int) dialNorm * -1;
+                }
                 else if (stream.StreamType == TSStreamType.AC3_PLUS_AUDIO && secondFrame)
                 {
                     stream.DialNorm = (int) dialNormExt * -1;
@@ -356,25 +375,37 @@ namespace BDInfo.Lib.BDROM
             }
             stream.IsVBR = false;
             if (stream.StreamType == TSStreamType.AC3_PLUS_AUDIO && bsid == 6 && !secondFrame)
+            {
                 stream.IsInitialized = false;
+            }
             else
+            {
                 stream.IsInitialized = true;
+            }
         }
 
         private static void EmdfPayloadConfig(TSStreamBuffer buffer)
         {
             bool sampleOffsetE = buffer.ReadBool();
             if (sampleOffsetE)
+            {
                 buffer.BSSkipBits(12);
+            }
 
             if (buffer.ReadBool()) //duratione
+            {
                 buffer.BSSkipBits(11); //duration
+            }
 
             if (buffer.ReadBool()) //groupide
+            {
                 buffer.BSSkipBits(2); //groupid
+            }
 
             if (buffer.ReadBool())
+            {
                 buffer.BSSkipBits(8); // reserved
+            }
 
             if (!buffer.ReadBool()) //discard_unknown_payload
             {
@@ -383,7 +414,9 @@ namespace BDInfo.Lib.BDROM
                 if (!sampleOffsetE)
                 {
                     if (buffer.ReadBool()) //payload_frame_aligned
+                    {
                         buffer.BSSkipBits(9);
+                    }
                 }
             }
         }

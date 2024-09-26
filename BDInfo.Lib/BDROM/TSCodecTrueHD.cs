@@ -27,7 +27,10 @@ namespace BDInfo.Lib.BDROM
         {
             if (stream.IsInitialized &&
                 stream.CoreStream != null &&
-                stream.CoreStream.IsInitialized) return;
+                stream.CoreStream.IsInitialized)
+            {
+                return;
+            }
 
             var syncFound = false;
             uint sync = 0;
@@ -140,11 +143,15 @@ namespace BDInfo.Lib.BDROM
                 for (var idx = 0; idx < numExtensions; ++idx)
                 {
                     if (Convert.ToBoolean(buffer.ReadBits2(8)))
+                    {
                         hasContent = true;
+                    }
                 }
 
                 if (hasContent)
+                {
                     stream.HasExtensions = true;
+                }
             }
 
 #if DEBUG
@@ -164,7 +171,9 @@ namespace BDInfo.Lib.BDROM
 
             stream.IsVBR = true;
             if (stream.CoreStream != null && stream.CoreStream.IsInitialized)
+            {
                 stream.IsInitialized = true;
+            }
         }
     }
 }

@@ -70,10 +70,16 @@ namespace BDInfo.Lib.BDROM
 
         public static void Scan(TSAudioStream stream, TSStreamBuffer buffer, ref string tag)
         {
-            if (stream.IsInitialized) return;
+            if (stream.IsInitialized)
+            {
+                return;
+            }
 
             int syncWord = buffer.ReadBits2(12);
-            if (syncWord != 0b1111_1111_1111) return;
+            if (syncWord != 0b1111_1111_1111)
+            {
+                return;
+            }
 
             // fixed header
             int audioVersionID = buffer.ReadBits2(1);
@@ -88,9 +94,13 @@ namespace BDInfo.Lib.BDROM
 
 
             if (samplingRateIndex <= 13)
+            {
                 stream.SampleRate = AACSampleRates[samplingRateIndex];
+            }
             else
+            {
                 stream.SampleRate = 0;
+            }
             
 
             if (channelMode <= AACChannelsSize)
@@ -110,7 +120,9 @@ namespace BDInfo.Lib.BDROM
                 stream.LFE = 1;
             }
             else
+            {
                 stream.LFE = 0;
+            }
             
             stream.ExtendedData = $"{AACID[audioVersionID]} {GetAACProfile(profileObjectType)}";
 

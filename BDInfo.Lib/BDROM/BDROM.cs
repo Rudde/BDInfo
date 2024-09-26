@@ -127,9 +127,13 @@ namespace BDInfo.Lib.BDROM
             }
 
             if (!IsImage)
+            {
                 DirectoryBDMV = GetDirectoryBDMV(path);
+            }
             else
+            {
                 DiscDirectoryBDMV = GetDiscDirectoryBDMV();
+            }
             
             if ((!IsImage && DirectoryBDMV == null) || (IsImage && DiscDirectoryBDMV == null))
             {

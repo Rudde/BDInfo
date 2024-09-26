@@ -26,7 +26,10 @@ namespace BDInfo.Lib.BDROM
             TSStreamBuffer buffer,
             ref string tag)
         {
-            if (stream.IsInitialized) return;
+            if (stream.IsInitialized)
+            {
+                return;
+            }
 
             byte[] header = buffer.ReadBytes(4);
             int flags = (header[2] << 8) + header[3];

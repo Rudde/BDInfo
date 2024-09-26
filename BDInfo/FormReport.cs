@@ -392,8 +392,10 @@ namespace BDInfo
                 report += "\r\n";
 
                 if (!string.IsNullOrEmpty(BDROM.DiscTitle))
+                {
                     report += string.Format(CultureInfo.InvariantCulture,
-                                            "{0,-16}{1}\r\n", "Disc Title:", BDROM.DiscTitle);
+                        "{0,-16}{1}\r\n", "Disc Title:", BDROM.DiscTitle);
+                }
 
                 report += string.Format(CultureInfo.InvariantCulture,
                                         "{0,-16}{1}\r\n", "Disc Label:", BDROM.VolumeLabel);
@@ -466,8 +468,10 @@ namespace BDInfo
                     "{0,-24}{1}\r\n", "Description:", "");
                  */
                 if (!string.IsNullOrEmpty(BDROM.DiscTitle))
+                {
                     summary += string.Format(CultureInfo.InvariantCulture,
-                                            "{0,-16}{1}\r\n", "Disc Title:", BDROM.DiscTitle);
+                        "{0,-16}{1}\r\n", "Disc Title:", BDROM.DiscTitle);
+                }
 
                 summary += string.Format(CultureInfo.InvariantCulture,
                                          "{0,-16}{1}\r\n", "Disc Label:", BDROM.VolumeLabel);
@@ -513,7 +517,10 @@ namespace BDInfo
 
                     foreach (TSStream stream in playlist.SortedStreams)
                     {
-                        if (!stream.IsVideoStream) continue;
+                        if (!stream.IsVideoStream)
+                        {
+                            continue;
+                        }
 
                         string streamName = stream.CodecName;
                         if (stream.AngleIndex > 0)
@@ -568,7 +575,10 @@ namespace BDInfo
 
                     foreach (TSStream stream in playlist.SortedStreams)
                     {
-                        if (!stream.IsAudioStream) continue;
+                        if (!stream.IsAudioStream)
+                        {
+                            continue;
+                        }
 
                         string streamBitrate = string.Format(CultureInfo.InvariantCulture,
                                                             "{0,5:D} kbps",
@@ -610,7 +620,10 @@ namespace BDInfo
 
                     foreach (TSStream stream in playlist.SortedStreams)
                     {
-                        if (!stream.IsGraphicsStream) continue;
+                        if (!stream.IsGraphicsStream)
+                        {
+                            continue;
+                        }
 
                         string streamBitrate = string.Format(CultureInfo.InvariantCulture,
                                                              "{0,5:F2} kbps",
@@ -652,7 +665,10 @@ namespace BDInfo
 
                     foreach (TSStream stream in playlist.SortedStreams)
                     {
-                        if (!stream.IsTextStream) continue;
+                        if (!stream.IsTextStream)
+                        {
+                            continue;
+                        }
 
                         string streamBitrate = string.Format(CultureInfo.InvariantCulture,
                                                              "{0,5:F2} kbps",
@@ -834,7 +850,10 @@ namespace BDInfo
                         {
                             TSStreamDiagnostics diag = diagList[diagIndex++];
 
-                            if (diag.Marker < clip.TimeIn) continue;
+                            if (diag.Marker < clip.TimeIn)
+                            {
+                                continue;
+                            }
 
                             chapterPosition =
                                 diag.Marker -
@@ -1026,8 +1045,15 @@ namespace BDInfo
                     Dictionary<string, TSStreamClip> reportedClips = new Dictionary<string, TSStreamClip>();
                     foreach (TSStreamClip clip in playlist.StreamClips)
                     {
-                        if (clip.StreamFile == null) continue;
-                        if (reportedClips.ContainsKey(clip.Name)) continue;
+                        if (clip.StreamFile == null)
+                        {
+                            continue;
+                        }
+
+                        if (reportedClips.ContainsKey(clip.Name))
+                        {
+                            continue;
+                        }
                         reportedClips[clip.Name] = clip;
 
                         string clipName = clip.DisplayName;
@@ -1037,7 +1063,10 @@ namespace BDInfo
                         }
                         foreach (TSStream clipStream in clip.StreamFile.Streams.Values)
                         {
-                            if (!playlist.Streams.ContainsKey(clipStream.PID)) continue;
+                            if (!playlist.Streams.ContainsKey(clipStream.PID))
+                            {
+                                continue;
+                            }
 
                             TSStream playlistStream = 
                                 playlist.Streams[clipStream.PID];

@@ -334,10 +334,14 @@ namespace BDInfo.Lib.BDROM
 
                 case TSStreamType.PRESENTATION_GRAPHICS:
                     if (isFullScan)
+                    {
                         TSCodecPGS.Scan(
                             (TSGraphicsStream)stream, buffer, ref streamState.StreamTag);
+                    }
                     else
+                    {
                         stream.IsInitialized = true;
+                    }
                     break;
 
                 default:
@@ -376,7 +380,10 @@ namespace BDInfo.Lib.BDROM
             BigInteger PTS,
             BigInteger PTSDiff)
         {
-            if (Playlists == null) return;
+            if (Playlists == null)
+            {
+                return;
+            }
 
             foreach (ushort PID in StreamStates.Keys)
             {
@@ -423,7 +430,10 @@ namespace BDInfo.Lib.BDROM
             BigInteger PTS,
             BigInteger PTSDiff)
         {
-            if (Playlists == null) return;
+            if (Playlists == null)
+            {
+                return;
+            }
 
             TSStreamState streamState = StreamStates[PID];
             double streamTime = (double)PTS / 90000;
@@ -434,7 +444,10 @@ namespace BDInfo.Lib.BDROM
             {
                 foreach (TSStreamClip clip in playlist.StreamClips)
                 {
-                    if (clip.Name != this.Name) continue;
+                    if (clip.Name != this.Name)
+                    {
+                        continue;
+                    }
 
                     if (streamTime == 0 ||
                         (streamTime >= clip.TimeIn &&
@@ -985,7 +998,9 @@ namespace BDInfo.Lib.BDROM
                                                     */
                                                     CreateStream(streamPID, streamType, streamDescriptors);
                                                     if (Streams[streamPID].IsGraphicsStream)
+                                                    {
                                                         Streams[streamPID].IsInitialized = !isFullScan;
+                                                    }
                                                 }
                                                 k += streamInfoLength;
                                             }
@@ -1617,7 +1632,10 @@ namespace BDInfo.Lib.BDROM
                 BigInteger PTSDiff = 0;
                 foreach (TSStream stream in Streams.Values)
                 {
-                    if (!stream.IsVideoStream) continue;
+                    if (!stream.IsVideoStream)
+                    {
+                        continue;
+                    }
 
                     if (StreamStates.ContainsKey(stream.PID) &&
                         StreamStates[stream.PID].PTSLast > PTSLast)

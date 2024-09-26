@@ -19,11 +19,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Text;
 using System.Windows.Forms;
 using BDInfo.Lib.BDROM;
 using ZedGraph;
@@ -218,9 +215,18 @@ namespace BDInfo
                     {
                         double bitrate = windowBitsSum / windowSecondsSum / 1000000;
 
-                        if (bitrate < pointMin) pointMin = bitrate;
-                        if (bitrate > pointMax) pointMax = bitrate;
-                        pointCount++; pointAvg += bitrate;
+                        if (bitrate < pointMin)
+                        {
+                            pointMin = bitrate;
+                        }
+
+                        if (bitrate > pointMax)
+                        {
+                            pointMax = bitrate;
+                        }
+
+                        pointCount++;
+                        pointAvg += bitrate;
 
                         for (double x = pointSeconds; x < (pointPosition - 1); x++)
                         {
@@ -340,7 +346,10 @@ namespace BDInfo
                 for (int i = 0; i < diagList.Count; i++)
                 {
                     TSStreamDiagnostics diag = diagList[i];
-                    if (diag.Tag == null) continue;
+                    if (diag.Tag == null)
+                    {
+                        continue;
+                    }
 
                     string frameType = diag.Tag;
                     double frameSize = diag.Bytes / 1024;
@@ -350,9 +359,20 @@ namespace BDInfo
                         clip.TimeIn +
                         clip.RelativeTimeIn;
 
-                    if (frameSize > overallMax) overallMax = frameSize;
-                    if (frameSize < pointMin) pointMin = frameSize;
-                    if (frameSize > pointMax) pointMax = frameSize;
+                    if (frameSize > overallMax)
+                    {
+                        overallMax = frameSize;
+                    }
+
+                    if (frameSize < pointMin)
+                    {
+                        pointMin = frameSize;
+                    }
+
+                    if (frameSize > pointMax)
+                    {
+                        pointMax = frameSize;
+                    }
 
                     pointCount++; 
                     pointAvg += frameSize;
@@ -452,7 +472,10 @@ namespace BDInfo
                 for (int i = 0; i < diagList.Count; i++)
                 {
                     TSStreamDiagnostics diag = diagList[i];
-                    if (diag.Tag == null) continue;
+                    if (diag.Tag == null)
+                    {
+                        continue;
+                    }
 
                     string frameType = diag.Tag;
                     double frameSize = diag.Bytes / 1024;
@@ -580,7 +603,8 @@ namespace BDInfo
                 {
                     return (int)(Count - frameType.Count);
                 }
-                else return Name.CompareTo(frameType.Name);
+
+                return Name.CompareTo(frameType.Name);
             }
         }
 

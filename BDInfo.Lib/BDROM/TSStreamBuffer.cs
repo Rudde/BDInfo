@@ -52,7 +52,10 @@ namespace BDInfo.Lib.BDROM
                 length = _buffer.Length - _bufferLength;
             }
 
-            if (length <= 0) return;
+            if (length <= 0)
+            {
+                return;
+            }
 
             Array.Copy(buffer, offset, _buffer, _bufferLength, length);
             _bufferLength += length;
@@ -89,6 +92,7 @@ namespace BDInfo.Lib.BDROM
 
             var value = new byte[bytes];
             _stream.Read(value, 0, bytes);
+
             return value;
         }
 
@@ -143,7 +147,10 @@ namespace BDInfo.Lib.BDROM
         {
             var pos = _stream.Position;
             _skippedBytes = 0;
-            if (pos == _bufferLength) return false;
+            if (pos == _bufferLength)
+            {
+                return false;
+            }
 
             var data = ReadByte(skipH26xEmulationByte);
             var vector = new BitVector32(data);
@@ -175,7 +182,10 @@ namespace BDInfo.Lib.BDROM
             var data = 0;
             for (var i = 0; i < 2; i++)
             {
-                if (pos + i >= _bufferLength) break;
+                if (pos + i >= _bufferLength)
+                {
+                    break;
+                }
                 data += (ReadByte(skipH26xEmulationByte) << shift);
                 shift -= 8;
             }
@@ -212,7 +222,10 @@ namespace BDInfo.Lib.BDROM
             var data = 0;
             for (var i = 0; i < 4; i++)
             {
-                if (pos + i >= _bufferLength) break;
+                if (pos + i >= _bufferLength)
+                {
+                    break;
+                }
                 data += (ReadByte(skipH26xEmulationByte) << shift);
                 shift -= 8;
             }
@@ -249,7 +262,10 @@ namespace BDInfo.Lib.BDROM
             var data = 0;
             for (var i = 0; i < 4; i++)
             {
-                if (pos + i >= _bufferLength) break;
+                if (pos + i >= _bufferLength)
+                {
+                    break;
+                }
                 data += (ReadByte(skipH26xEmulationByte) << shift);
                 shift -= 8;
             }
@@ -258,7 +274,10 @@ namespace BDInfo.Lib.BDROM
             var data2 = 0;
             for (var i = 0; i < 4; i++)
             {
-                if (pos + i >= _bufferLength) break;
+                if (pos + i >= _bufferLength)
+                {
+                    break;
+                }
                 data2 += (ReadByte(skipH26xEmulationByte) << shift);
                 shift -= 8;
             }
@@ -310,7 +329,9 @@ namespace BDInfo.Lib.BDROM
         public void BSSkipNextByte()
         {
             if (_skipBits > 0)
+            {
                 BSSkipBits(8 - _skipBits);
+            }
         }
 
         public void BSResetBits()
@@ -345,7 +366,9 @@ namespace BDInfo.Lib.BDROM
         {
             byte leadingZeroes = 0;
             while (DataBitStreamRemain() > 0 && !ReadBool(skipH26xEmulationByte))
+            {
                 leadingZeroes++;
+            }
 
             var infoD = Math.Pow(2, leadingZeroes);
             var result = (uint)infoD - 1 + ReadBits4(leadingZeroes, skipH26xEmulationByte);
@@ -362,7 +385,9 @@ namespace BDInfo.Lib.BDROM
         {
             byte leadingZeroes = 0;
             while (DataBitStreamRemain() > 0 && !ReadBool(skipH26xEmulationByte))
+            {
                 leadingZeroes++;
+            }
 
             BSSkipBits(leadingZeroes, skipH26xEmulationByte);
         }

@@ -84,7 +84,11 @@ namespace BDInfo.Lib.BDROM
                         {
                             tag = null;
                         }
-                        if (stream.IsInitialized) return;
+
+                        if (stream.IsInitialized)
+                        {
+                            return;
+                        }
                     }
                 }
                 else if (parse == 0x0000010F)

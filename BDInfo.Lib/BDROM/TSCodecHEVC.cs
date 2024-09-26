@@ -551,20 +551,20 @@ namespace BDInfo.Lib.BDROM
                             frameTypeRead = tag != null;
                             break;
                         case 32:
-                                VideoParameterSet(buffer);
+                            VideoParameterSet(buffer);
                             break;
                         case 33:
-                                SeqParameterSet(buffer); 
+                            SeqParameterSet(buffer); 
                             break;
                         case 34:
-                                PicParameterSet(buffer);
+                            PicParameterSet(buffer);
                             break;
                         case 35:
-                                AccessUnitDelimiter(buffer);
+                            AccessUnitDelimiter(buffer);
                             break;
                         case 39:
                         case 40:
-                                Sei(buffer);
+                            Sei(buffer);
                             break;
                     }
 
@@ -628,8 +628,14 @@ namespace BDInfo.Lib.BDROM
                         profile += " @ Level " +
                                    string.Format(CultureInfo.InvariantCulture, dec >= 1 ? "{0:0.0}" : "{0:0}", calcLevel) +
                                    " @ ";
-                        if (seqParameterSet.TierFlag) profile += "High";
-                        else profile += "Main";
+                        if (seqParameterSet.TierFlag)
+                        {
+                            profile += "High";
+                        }
+                        else
+                        {
+                            profile += "Main";
+                        }
                     }
 
                     stream.EncodingProfile = profile;
@@ -649,12 +655,17 @@ namespace BDInfo.Lib.BDROM
                                 chromaFormat = "4:4:4";
                                 break;
                         }
+
                         if (chromaFormat != string.Empty && extendedStreamDiagnostics)
+                        {
                             ExtendedFormatInfo.Add(chromaFormat);
+                        }
                     }
 
                     if (seqParameterSet.BitDepthLumaMinus8 == seqParameterSet.BitDepthChromaMinus8)
+                    {
                         ExtendedFormatInfo.Add($"{seqParameterSet.BitDepthLumaMinus8 + 8} bits");
+                    }
 
                     if (seqParameterSet.BitDepthLumaMinus8 + 8 == 10 &&                 // 10 bit
                         seqParameterSet.ChromaFormatIDC == 1 &&                         // ChromaFormat 4:2:0
@@ -683,7 +694,6 @@ namespace BDInfo.Lib.BDROM
                             {
                                 ExtendedFormatInfo.Add(TransferCharacteristics(seqParameterSet.VUIParameters.TransferCharacteristics));
                                 ExtendedFormatInfo.Add(MatrixCoefficients(seqParameterSet.VUIParameters.MatrixCoefficients));
-                                
                             }
                         }
                     }
@@ -725,9 +735,11 @@ namespace BDInfo.Lib.BDROM
             bool dependentSliceSegmentFlag = false;
 
             _firstSliceSegmentInPicFlag = buffer.ReadBool();
-            
+
             if (nalUnitType >= 16 && nalUnitType <= 23)
+            {
                 tempBool = buffer.ReadBool(); // no_output_of_prior_pics_flag
+            }
 
             _slicePicParameterSetId = buffer.ReadExp(true);
 
@@ -1350,7 +1362,9 @@ namespace BDInfo.Lib.BDROM
             for (int c = 0; c < 8; c++)
             {
                 if (Meta.Primaries[c] == ushort.MaxValue)
+                {
                     notValid = true;
+                }
             }
 
             MasteringDisplayColorPrimaries = string.Empty;
@@ -1364,15 +1378,29 @@ namespace BDInfo.Lib.BDROM
                     for (int j = 0; j < 2; j++)
                     {
                         // +/- 0.0005 (3 digits after comma)
-                        if (Meta.Primaries[G * 2 + j] < MasteringDisplayColorVolumeValues[i].Values[0 * 2 + j] - 25 || (Meta.Primaries[G * 2 + j] >= MasteringDisplayColorVolumeValues[i].Values[0 * 2 + j] + 25))
+                        if (Meta.Primaries[G * 2 + j] < MasteringDisplayColorVolumeValues[i].Values[0 * 2 + j] - 25 ||
+                            (Meta.Primaries[G * 2 + j] >= MasteringDisplayColorVolumeValues[i].Values[0 * 2 + j] + 25))
+                        {
                             code = 0;
-                        if (Meta.Primaries[B * 2 + j] < MasteringDisplayColorVolumeValues[i].Values[1 * 2 + j] - 25 || (Meta.Primaries[B * 2 + j] >= MasteringDisplayColorVolumeValues[i].Values[1 * 2 + j] + 25))
+                        }
+
+                        if (Meta.Primaries[B * 2 + j] < MasteringDisplayColorVolumeValues[i].Values[1 * 2 + j] - 25 ||
+                            (Meta.Primaries[B * 2 + j] >= MasteringDisplayColorVolumeValues[i].Values[1 * 2 + j] + 25))
+                        {
                             code = 0;
-                        if (Meta.Primaries[R * 2 + j] < MasteringDisplayColorVolumeValues[i].Values[2 * 2 + j] - 25 || (Meta.Primaries[R * 2 + j] >= MasteringDisplayColorVolumeValues[i].Values[2 * 2 + j] + 25))
+                        }
+
+                        if (Meta.Primaries[R * 2 + j] < MasteringDisplayColorVolumeValues[i].Values[2 * 2 + j] - 25 ||
+                            (Meta.Primaries[R * 2 + j] >= MasteringDisplayColorVolumeValues[i].Values[2 * 2 + j] + 25))
+                        {
                             code = 0;
+                        }
                         // +/- 0.00005 (4 digits after comma)
-                        if (Meta.Primaries[3 * 2 + j] < MasteringDisplayColorVolumeValues[i].Values[3 * 2 + j] - 2 || (Meta.Primaries[3 * 2 + j] >= MasteringDisplayColorVolumeValues[i].Values[3 * 2 + j] + 3))
+                        if (Meta.Primaries[3 * 2 + j] < MasteringDisplayColorVolumeValues[i].Values[3 * 2 + j] - 2 ||
+                            (Meta.Primaries[3 * 2 + j] >= MasteringDisplayColorVolumeValues[i].Values[3 * 2 + j] + 3))
+                        {
                             code = 0;
+                        }
                     }
                     if (code > 0)
                     {
@@ -1383,6 +1411,7 @@ namespace BDInfo.Lib.BDROM
                 }
 
                 if (!humanReadablePrimaries)
+                {
                     MasteringDisplayColorPrimaries += string.Format(CultureInfo.InvariantCulture,
                         "R: x={0:0.000000} y={1:0.000000}, G: x={2:0.000000} y={3:0.000000}" +
                         ", B: x={4:0.000000} y={5:0.000000}, White point: x={6:0.000000} y={7:0.000000}",
@@ -1390,6 +1419,7 @@ namespace BDInfo.Lib.BDROM
                         (double)Meta.Primaries[G * 2] / 50000, (double)Meta.Primaries[(G * 2) + 1] / 50000,
                         (double)Meta.Primaries[B * 2] / 50000, (double)Meta.Primaries[(B * 2) + 1] / 50000,
                         (double)Meta.Primaries[3 * 2] / 50000, (double)Meta.Primaries[(3 * 2) + 1] / 50000);
+                }
             }
                             
 
@@ -1656,7 +1686,10 @@ namespace BDInfo.Lib.BDROM
                     bitRateScale = (byte)buffer.ReadBits2(4, true);
                     cpbSizeScale = (byte)buffer.ReadBits2(4, true);
                     if (subPicHRDParamsPresentFlag)
+                    {
                         buffer.BSSkipBits(4, true); //cpb_size_du_scale
+                    }
+
                     initialCPBRemovalDelayLengthMinus1 = (byte)buffer.ReadBits2(5, true);
                     auCPBRemovalDelayLengthMinus1 = (byte)buffer.ReadBits2(5, true);
                     dpbOutputDelayLengthMinus1 = (byte)buffer.ReadBits2(5, true);
@@ -1730,4 +1763,3 @@ namespace BDInfo.Lib.BDROM
         }
     }
 }
-

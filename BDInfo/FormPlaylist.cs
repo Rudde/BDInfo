@@ -84,12 +84,18 @@ namespace BDInfo
 
             listViewPlaylistFiles.Items.Clear();
 
-            if (BDROM == null) return;
+            if (BDROM == null)
+            {
+                return;
+            }
 
             foreach (TSPlaylistFile playlist
                 in BDROM.PlaylistFiles.Values)
             {
-                if (!playlist.IsValid) continue;
+                if (!playlist.IsValid)
+                {
+                    continue;
+                }
 
                 if (checkBoxFilterIncompatible.Checked)
                 {
@@ -105,7 +111,11 @@ namespace BDInfo
                             }
                         }
                     }
-                    if (!isCompatible) continue;
+
+                    if (!isCompatible)
+                    {
+                        continue;
+                    }
                 }
 
                 ListViewItem.ListViewSubItem playlistName =
@@ -336,7 +346,10 @@ namespace BDInfo
             object sender, 
             EventArgs e)
         {
-            if (listViewStreamFiles.SelectedItems.Count == 0) return;
+            if (listViewStreamFiles.SelectedItems.Count == 0)
+            {
+                return;
+            }
 
             TSPlaylistFile playlist = SelectedPlaylist;
             if (playlist != null)
@@ -372,7 +385,10 @@ namespace BDInfo
             object sender, 
             EventArgs e)
         {
-            if (listViewTargetFiles.SelectedItems.Count == 0) return;
+            if (listViewTargetFiles.SelectedItems.Count == 0)
+            {
+                return;
+            }
 
             int clipIndex = listViewTargetFiles.SelectedIndices[0];
             if (clipIndex < StreamClips.Count)
@@ -400,7 +416,10 @@ namespace BDInfo
             object sender, 
             EventArgs e)
         {
-            if (listViewTargetFiles.SelectedItems.Count == 0) return;
+            if (listViewTargetFiles.SelectedItems.Count == 0)
+            {
+                return;
+            }
 
             int selectedIndex = listViewTargetFiles.SelectedIndices[0];
             if (selectedIndex > 0 && selectedIndex < StreamClips.Count)
@@ -417,7 +436,10 @@ namespace BDInfo
             object sender, 
             EventArgs e)
         {
-            if (listViewTargetFiles.SelectedItems.Count == 0) return;
+            if (listViewTargetFiles.SelectedItems.Count == 0)
+            {
+                return;
+            }
 
             int selectedIndex = listViewTargetFiles.SelectedIndices[0];
             if (selectedIndex < listViewTargetFiles.Items.Count - 1 

@@ -117,6 +117,7 @@ namespace BDInfo.Lib.BDROM
             TSDescriptor descriptor = 
                 new TSDescriptor(Name, (byte)Value.Length);
             Value.CopyTo(descriptor.Value, 0);
+
             return descriptor;
         }
     }
@@ -349,23 +350,26 @@ namespace BDInfo.Lib.BDROM
                         return "DD AC3+";
                     case TSStreamType.AC3_TRUE_HD_AUDIO:
                         if (((TSAudioStream)this).HasExtensions)
+                        {
                             return "Dolby Atmos";
-                        else
-                            return "Dolby TrueHD";
+                        }
+                        return "Dolby TrueHD";
                     case TSStreamType.DTS_AUDIO:
                         return "DTS";
                     case TSStreamType.DTS_HD_AUDIO:
                         if (((TSAudioStream)this).HasExtensions)
+                        {
                             return "DTS:X Hi-Res";
-                        else
-                            return "DTS-HD Hi-Res";
+                        }
+                        return "DTS-HD Hi-Res";
                     case TSStreamType.DTS_HD_SECONDARY_AUDIO:
                         return "DTS Express";
                     case TSStreamType.DTS_HD_MASTER_AUDIO:
                         if (((TSAudioStream)this).HasExtensions)
+                        {
                             return "DTS:X Master";
-                        else
-                            return "DTS-HD Master";
+                        }
+                        return "DTS-HD Master";
                     case TSStreamType.PRESENTATION_GRAPHICS:
                         return "PGS";
                     case TSStreamType.INTERACTIVE_GRAPHICS:
@@ -408,34 +412,39 @@ namespace BDInfo.Lib.BDROM
                         return "LPCM";
                     case TSStreamType.AC3_AUDIO:
                         if (((TSAudioStream)this).AudioMode == TSAudioMode.Extended)
+                        {
                             return "AC3-EX";
-                        else
-                            return "AC3";
+                        }
+                        return "AC3";
                     case TSStreamType.AC3_PLUS_AUDIO:
                     case TSStreamType.AC3_PLUS_SECONDARY_AUDIO:
                         return "AC3+";
                     case TSStreamType.AC3_TRUE_HD_AUDIO:
                         if (((TSAudioStream)this).HasExtensions)
+                        {
                             return "Atmos";
-                        else
-                            return "TrueHD";
+                        }
+                        return "TrueHD";
                     case TSStreamType.DTS_AUDIO:
                         if (((TSAudioStream)this).AudioMode == TSAudioMode.Extended)
+                        {
                             return "DTS-ES";
-                        else
-                            return "DTS";
+                        }
+                        return "DTS";
                     case TSStreamType.DTS_HD_AUDIO:
                         if (((TSAudioStream)this).HasExtensions)
+                        {
                             return "DTS:X HR";
-                        else
-                            return "DTS-HD HR";
+                        }
+                        return "DTS-HD HR";
                     case TSStreamType.DTS_HD_SECONDARY_AUDIO:
                         return "DTS Express";
                     case TSStreamType.DTS_HD_MASTER_AUDIO:
                         if (((TSAudioStream)this).HasExtensions)
+                        {
                             return "DTS:X MA";
-                        else
-                            return "DTS-HD MA";
+                        }
+                        return "DTS-HD MA";
                     case TSStreamType.PRESENTATION_GRAPHICS:
                         return "PGS";
                     case TSStreamType.INTERACTIVE_GRAPHICS:
@@ -585,9 +594,14 @@ namespace BDInfo.Lib.BDROM
                 if (BaseView != null)
                 {
                     if (BaseView == true)
+                    {
                         description += "Right Eye";
+                    }
                     else
+                    {
                         description += "Left Eye";
+                    }
+
                     description += " / ";
                 }
 
@@ -892,6 +906,7 @@ namespace BDInfo.Lib.BDROM
             stream.ForcedCaptions = ForcedCaptions;
             stream.CaptionIDs = CaptionIDs;
             stream.LastFrame = LastFrame;
+
             return stream;
         }
 
@@ -933,6 +948,7 @@ namespace BDInfo.Lib.BDROM
         {
             TSTextStream stream = new TSTextStream();
             CopyTo(stream);
+
             return stream;
         }
     }

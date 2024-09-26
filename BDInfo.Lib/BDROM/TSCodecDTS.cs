@@ -48,7 +48,10 @@ namespace BDInfo.Lib.BDROM
             long bitrate,
             ref string tag)
         {
-            if (stream.IsInitialized) return;
+            if (stream.IsInitialized)
+            {
+                return;
+            }
 
             bool syncFound = false;
             uint sync = 0;
@@ -61,7 +64,11 @@ namespace BDInfo.Lib.BDROM
                     break;
                 }
             }
-            if (!syncFound) return;
+
+            if (!syncFound)
+            {
+                return;
+            }
 
             buffer.BSSkipBits(6);
             uint crcPresent = buffer.ReadBits4(1);

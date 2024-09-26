@@ -103,8 +103,11 @@ namespace BDInfo
                         {
                             playlist = BDROM.PlaylistFiles[playlistFileName];
                         }
+
                         if (playlist != null)
-                          Clipboard.SetText(playlist.GetFilePath());
+                        {
+                            Clipboard.SetText(playlist.GetFilePath());
+                        }
                     }
                 }
                 if (focusedControl == listViewStreamFiles && listViewStreamFiles.SelectedItems.Count > 0)
@@ -118,8 +121,11 @@ namespace BDInfo
                         {
                             streamFile = BDROM.StreamFiles[streamFileName];
                         }
+
                         if (streamFile != null)
+                        {
                             Clipboard.SetText(streamFile.GetFilePath());
+                        }
                     }
                 }
                 return true;
@@ -414,7 +420,9 @@ namespace BDInfo
             listViewStreams.Items.Clear();
 
             if (BDROM != null && BDROM.IsImage && BDROM.CdReader != null)
+            {
                 BDROM.CloseDiscImage();
+            }
 
             InitBDROMWorker = new BackgroundWorker();
             InitBDROMWorker.WorkerReportsProgress = true;
@@ -456,9 +464,15 @@ namespace BDInfo
             DialogResult result = MessageBox.Show(string.Format(CultureInfo.InvariantCulture,
                 "An error occurred while scanning the playlist file {0}.\n\nThe disc may be copy-protected or damaged.\n\nDo you want to continue scanning the playlist files?", playlistFile.Name), 
                 "BDInfo Scan Error", MessageBoxButtons.YesNo);
-            
-            if (result == DialogResult.Yes) return true;
-            else return false;
+
+            if (result == DialogResult.Yes)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         protected bool BDROM_StreamFileScanError(TSStreamFile streamFile, Exception ex)
@@ -467,8 +481,14 @@ namespace BDInfo
                 "An error occurred while scanning the stream file {0}.\n\nThe disc may be copy-protected or damaged.\n\nDo you want to continue scanning the stream files?", streamFile.Name),
                 "BDInfo Scan Error", MessageBoxButtons.YesNo);
 
-            if (result == DialogResult.Yes) return true;
-            else return false;
+            if (result == DialogResult.Yes)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         protected bool BDROM_StreamClipFileScanError(TSStreamClipFile streamClipFile, Exception ex)
@@ -477,8 +497,14 @@ namespace BDInfo
                 "An error occurred while scanning the stream clip file {0}.\n\nThe disc may be copy-protected or damaged.\n\nDo you want to continue scanning the stream clip files?", streamClipFile.Name),
                 "BDInfo Scan Error", MessageBoxButtons.YesNo);
 
-            if (result == DialogResult.Yes) return true;
-            else return false;
+            if (result == DialogResult.Yes)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         private void InitBDROMProgress(
@@ -603,7 +629,10 @@ namespace BDInfo
             listViewStreamFiles.Items.Clear();
             listViewStreams.Items.Clear();
 
-            if (BDROM == null) return;
+            if (BDROM == null)
+            {
+                return;
+            }
 
             bool hasHiddenTracks = false;
 
@@ -617,7 +646,10 @@ namespace BDInfo
             foreach (TSPlaylistFile playlist1
                 in sortedPlaylistFiles)
             {
-                if (!playlist1.IsValid) continue;
+                if (!playlist1.IsValid)
+                {
+                    continue;
+                }
 
                 int matchingGroupIndex = 0;
                 for (int groupIndex = 0; groupIndex < groups.Count; groupIndex++)
@@ -625,7 +657,10 @@ namespace BDInfo
                     List<TSPlaylistFile> group = groups[groupIndex];
                     foreach (TSPlaylistFile playlist2 in group)
                     {
-                        if (!playlist2.IsValid) continue;
+                        if (!playlist2.IsValid)
+                        {
+                            continue;
+                        }
 
                         foreach (TSStreamClip clip1 in playlist1.StreamClips)
                         {
@@ -637,11 +672,23 @@ namespace BDInfo
                                     break;
                                 }
                             }
-                            if (matchingGroupIndex > 0) break;
+
+                            if (matchingGroupIndex > 0)
+                            {
+                                break;
+                            }
                         }
-                        if (matchingGroupIndex > 0) break;
+
+                        if (matchingGroupIndex > 0)
+                        {
+                            break;
+                        }
                     }
-                    if (matchingGroupIndex > 0) break;
+
+                    if (matchingGroupIndex > 0)
+                    {
+                        break;
+                    }
                 }
                 if (matchingGroupIndex > 0)
                 {
@@ -663,7 +710,10 @@ namespace BDInfo
                 foreach (TSPlaylistFile playlist in group)
                     //in BDROM.PlaylistFiles.Values)
                 {
-                    if (!playlist.IsValid) continue;
+                    if (!playlist.IsValid)
+                    {
+                        continue;
+                    }
 
                     if (playlist.HasHiddenTracks)
                     {
@@ -681,9 +731,11 @@ namespace BDInfo
                     playlistName.Tag = playlist.Name;
 
                     if (playlist.Chapters != null && playlist.Chapters.Count > 1 && BDInfoSettings.DisplayChapterCount)
-                        playlistName.Text += string.Format(CultureInfo.InvariantCulture, 
+                    {
+                        playlistName.Text += string.Format(CultureInfo.InvariantCulture,
                             " [{0:D2} Chapters]",
                             playlist.Chapters.Count);
+                    }
 
                     TimeSpan playlistLengthSpan =
                         new TimeSpan((long)(playlist.TotalLength * 10000000));
@@ -760,11 +812,21 @@ namespace BDInfo
             listViewStreamFiles.Items.Clear();
             listViewStreams.Items.Clear();
 
-            if (BDROM == null) return;
-            if (listViewPlaylistFiles.SelectedItems.Count == 0) return;
+            if (BDROM == null)
+            {
+                return;
+            }
+
+            if (listViewPlaylistFiles.SelectedItems.Count == 0)
+            {
+                return;
+            }
 
             ListViewItem playlistItem = listViewPlaylistFiles.SelectedItems[0];
-            if (playlistItem == null) return;
+            if (playlistItem == null)
+            {
+                return;
+            }
 
             TSPlaylistFile playlist = null;
             string playlistFileName = (string)playlistItem.SubItems[0].Tag;
@@ -772,7 +834,11 @@ namespace BDInfo
             {
                 playlist = BDROM.PlaylistFiles[playlistFileName];
             }
-            if (playlist == null) return;
+
+            if (playlist == null)
+            {
+                return;
+            }
 
             int clipCount = 0;
             foreach (TSStreamClip clip in playlist.StreamClips)
@@ -949,7 +1015,10 @@ namespace BDInfo
 
                     foreach (TSStream stream in playlist.Streams.Values)
                     {
-                        if (!stream.IsGraphicsStream) continue;
+                        if (!stream.IsGraphicsStream)
+                        {
+                            continue;
+                        }
 
                         ((TSGraphicsStream)stream).ForcedCaptions = 0;
                         ((TSGraphicsStream)stream).Captions = 0;
@@ -957,11 +1026,21 @@ namespace BDInfo
 
                     foreach (TSStreamClip clip in playlist.StreamClips)
                     {
-                        if (clip.StreamFile == null) continue;
+                        if (clip.StreamFile == null)
+                        {
+                            continue;
+                        }
                         foreach (TSStream stream in clip.StreamFile?.Streams.Values)
                         {
-                            if (!stream.IsGraphicsStream) continue;
-                            if (!playlist.Streams.ContainsKey(stream.PID)) continue;
+                            if (!stream.IsGraphicsStream)
+                            {
+                                continue;
+                            }
+
+                            if (!playlist.Streams.ContainsKey(stream.PID))
+                            {
+                                continue;
+                            }
 
                             TSGraphicsStream plStream = (TSGraphicsStream)playlist.Streams[stream.PID];
                             TSGraphicsStream clipStream = (TSGraphicsStream)stream;
@@ -970,9 +1049,14 @@ namespace BDInfo
                             plStream.Captions += clipStream.Captions;
 
                             if (plStream.Width == 0 && clipStream.Width > 0)
+                            {
                                 plStream.Width = clipStream.Width;
+                            }
+
                             if (plStream.Height == 0 && clipStream.Height > 0)
+                            {
                                 plStream.Height = clipStream.Height;
+                            }
                         }
                     }
                 }
@@ -1097,7 +1181,9 @@ namespace BDInfo
                     in BDROM.StreamFiles.Values)
                 {
                     if (streamFile != null)
+                    {
                         streamFiles.Add(streamFile);
+                    }
                 }
             }
             else
@@ -1151,16 +1237,24 @@ namespace BDInfo
                         streamFile.InterleavedFile != null)
                     {
                         if (streamFile.InterleavedFile.FileInfo != null)
+                        {
                             scanState.TotalBytes += streamFile.InterleavedFile.FileInfo.Length;
+                        }
                         else
+                        {
                             scanState.TotalBytes += streamFile.InterleavedFile.DFileInfo.Length;
+                        }
                     }
                     else
                     {
                         if (streamFile.FileInfo != null)
+                        {
                             scanState.TotalBytes += streamFile.FileInfo.Length;
+                        }
                         else
+                        {
                             scanState.TotalBytes += streamFile.DFileInfo.Length;
+                        }
                     }
                     
                     if (!scanState.PlaylistMap.ContainsKey(streamFile.Name))
@@ -1205,10 +1299,15 @@ namespace BDInfo
                         }
                         Thread.Sleep(0);
                     }
+
                     if (streamFile.FileInfo != null)
+                    {
                         scanState.FinishedBytes += streamFile.FileInfo.Length;
+                    }
                     else
+                    {
                         scanState.FinishedBytes += streamFile.DFileInfo.Length;
+                    }
                     if (scanState.Exception != null)
                     {
                         ScanResult.FileExceptions[streamFile.Name] = scanState.Exception;
@@ -1279,8 +1378,15 @@ namespace BDInfo
 
                 double progress = ((double)finishedBytes / scanState.TotalBytes);
                 int progressValue = (int)Math.Round(progress * 100);
-                if (progressValue < 0) progressValue = 0;
-                if (progressValue > 100) progressValue = 100;
+                if (progressValue < 0)
+                {
+                    progressValue = 0;
+                }
+
+                if (progressValue > 100)
+                {
+                    progressValue = 100;
+                }
                 progressBarScan.Value = progressValue;
 
                 TimeSpan elapsedTime = DateTime.Now.Subtract(scanState.TimeStarted);

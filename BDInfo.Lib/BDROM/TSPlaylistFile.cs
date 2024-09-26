@@ -429,7 +429,11 @@ namespace BDInfo.Lib.BDROM
                             angleClip.Length = streamClip.Length;
                             StreamClips.Add(angleClip);
                         }
-                        if (angles - 1 > AngleCount) AngleCount = angles - 1;
+
+                        if (angles - 1 > AngleCount)
+                        {
+                            AngleCount = angles - 1;
+                        }
                     }
 
                     int streamInfoLength = ReadInt16(data, ref pos);
@@ -456,7 +460,9 @@ namespace BDInfo.Lib.BDROM
                         if (stream != null)
                         {
                             if (!PlaylistStreams.ContainsKey(stream.PID) || streamClip.RelativeLength > 0.01)
+                            {
                                 PlaylistStreams[stream.PID] = stream;
+                            }
                         }
                     }
                     for (int i = 0; i < streamCountAudio; i++)
@@ -465,7 +471,9 @@ namespace BDInfo.Lib.BDROM
                         if (stream != null)
                         {
                             if (!PlaylistStreams.ContainsKey(stream.PID) || streamClip.RelativeLength > 0.01)
+                            {
                                 PlaylistStreams[stream.PID] = stream;
+                            }
                         }
                     }
                     for (int i = 0; i < streamCountPG; i++)
@@ -474,7 +482,9 @@ namespace BDInfo.Lib.BDROM
                         if (stream != null)
                         {
                             if (!PlaylistStreams.ContainsKey(stream.PID) || streamClip.RelativeLength > 0.01)
+                            {
                                 PlaylistStreams[stream.PID] = stream;
+                            }
                         }
                     }
                     for (int i = 0; i < streamCountIG; i++)
@@ -483,7 +493,9 @@ namespace BDInfo.Lib.BDROM
                         if (stream != null)
                         {
                             if (!PlaylistStreams.ContainsKey(stream.PID) || streamClip.RelativeLength > 0.01)
+                            {
                                 PlaylistStreams[stream.PID] = stream;
+                            }
                         }
                     }
                     for (int i = 0; i < streamCountSecondaryAudio; i++)
@@ -492,7 +504,9 @@ namespace BDInfo.Lib.BDROM
                         if (stream != null)
                         {
                             if (!PlaylistStreams.ContainsKey(stream.PID) || streamClip.RelativeLength > 0.01)
+                            {
                                 PlaylistStreams[stream.PID] = stream;
+                            }
                         }
 
                         pos += 2;
@@ -503,7 +517,9 @@ namespace BDInfo.Lib.BDROM
                         if (stream != null)
                         {
                             if (!PlaylistStreams.ContainsKey(stream.PID) || streamClip.RelativeLength > 0.01)
+                            {
                                 PlaylistStreams[stream.PID] = stream;
+                            }
                         }
 
                         pos += 6;
@@ -806,7 +822,9 @@ namespace BDInfo.Lib.BDROM
             foreach (TSStreamClip clip in StreamClips)
             {
                 if (referenceClip.StreamFile == null && clip.StreamFile != null)
+                {
                     referenceClip = clip;
+                }
 
                 if (clip.StreamClipFile.Streams.Count > referenceClip.StreamClipFile.Streams.Count && clip.RelativeLength > 0.01)
                 {
@@ -893,7 +911,10 @@ namespace BDInfo.Lib.BDROM
                     {
                         TSStream stream = Streams[clipStream.PID];
 
-                        if (stream.StreamType != clipStream.StreamType) continue;
+                        if (stream.StreamType != clipStream.StreamType)
+                        {
+                            continue;
+                        }
 
                         if (clipStream.BitRate > stream.BitRate)
                         {
@@ -1056,7 +1077,10 @@ namespace BDInfo.Lib.BDROM
         {
             get
             {
-                if (!IsInitialized) return false;
+                if (!IsInitialized)
+                {
+                    return false;
+                }
 
                 if (BDROM.FilterShortPlaylists &&
                     TotalLength < BDROM.FilterShortPlaylistsValue)

@@ -123,10 +123,16 @@ namespace BDInfo.Lib.BDROM
 
         public static void Scan(TSAudioStream stream, TSStreamBuffer buffer, ref string tag)
         {
-            if (stream.IsInitialized) return;
+            if (stream.IsInitialized)
+            {
+                return;
+            }
 
             int syncWord = buffer.ReadBits2(11) << 5;
-            if (syncWord != 0b1111_1111_1110_0000) return;
+            if (syncWord != 0b1111_1111_1110_0000)
+            {
+                return;
+            }
 
             int audioVersionID = buffer.ReadBits2(2);
             int layerIndex = buffer.ReadBits2(2);

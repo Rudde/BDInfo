@@ -68,7 +68,11 @@ namespace BDInfo.Lib.BDROM
                                 tag = "B";
                                 break;
                         }
-                        if (stream.IsInitialized) return;
+
+                        if (stream.IsInitialized)
+                        {
+                            return;
+                        }
                     }
                 }
                 else if (parse == 0x00000127 || parse == 0x00000167)
@@ -79,6 +83,7 @@ namespace BDInfo.Lib.BDROM
                 {
                     --sequenceParameterSetParse;
                     if (!stream.IsInitialized)
+                    {
                         switch (sequenceParameterSetParse)
                         {
                             case 2:
@@ -109,6 +114,7 @@ namespace BDInfo.Lib.BDROM
                                         profile = "Unknown Profile";
                                         break;
                                 }
+
                                 break;
 
                             case 1:
@@ -134,12 +140,14 @@ namespace BDInfo.Lib.BDROM
                                         "{0:D}.{1:D}",
                                         b / 10, (b - ((b / 10) * 10)));
                                 }
+
                                 stream.EncodingProfile = string.Format(
                                     "{0} {1}", profile, level);
                                 stream.IsVBR = true;
                                 stream.IsInitialized = true;
                                 break;
                         }
+                    }
                 }
             }
             return;

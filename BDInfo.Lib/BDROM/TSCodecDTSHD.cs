@@ -27,8 +27,11 @@ namespace BDInfo.Lib.BDROM
         {
             if (stream.IsInitialized &&
                 (stream.StreamType == TSStreamType.DTS_HD_SECONDARY_AUDIO ||
-                (stream.CoreStream != null &&
-                 stream.CoreStream.IsInitialized))) return;
+                 (stream.CoreStream != null &&
+                  stream.CoreStream.IsInitialized)))
+            {
+                return;
+            }
 
             var syncFound = false;
             uint sync = 0;
@@ -207,7 +210,10 @@ namespace BDInfo.Lib.BDROM
                         break;
                 }
 
-                if (stream.HasExtensions) break;
+                if (stream.HasExtensions)
+                {
+                    break;
+                }
             }
 
             // TODO
